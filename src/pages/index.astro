@@ -9,18 +9,18 @@ let repos = await fetch(GITHUB_REPOS_ENDPOINT).then((res) => res.json());
 repos = repos
 	.map((repo) => {
 		return {
-			name: repo.name,
+			name: repo.name.toUpperCase(),
 			description: repo.description,
 			url: `https://${ROOT_ADRESS}/${repo.name}`,
 		};
 	})
-	.filter((repo) => repo.name != ROOT_ADRESS);
+	.filter((repo) => repo.name != ROOT_ADRESS.toUpperCase());
 ---
 
 <Layout title="Bienvenido a mi Portfolio.">
-	<main>
+	<main class="m-auto p-6 max-w-prose">
 		<h1>Bienvenido a mi <span class="text-gradient">Portfolio</span></h1>
-		<ul role="list" class="link-card-grid">
+		<ul role="list" class="grid gap-4 p-0 grid-cols-fit">
 			{
 				repos &&
 					repos.map((repo) => {
@@ -38,27 +38,11 @@ repos = repos
 </Layout>
 
 <style>
-	main {
-		margin: auto;
-		padding: 1.5rem;
-		max-width: 60ch;
-	}
-	h1 {
-		font-size: 3rem;
-		font-weight: 800;
-		margin: 0;
-	}
 	.text-gradient {
 		background-image: var(--accent-gradient);
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
 		background-size: 400%;
 		background-position: 0%;
-	}
-	.link-card-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-		gap: 1rem;
-		padding: 0;
 	}
 </style>
